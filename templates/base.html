@@ -71,16 +71,28 @@
         </button>
       </form>
 
+      {% if user.is_authenticated %}
+      <!-- Example single danger button -->
+      <div class="btn-group">
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          {{request.user}}
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/logout">logout</a>
+        </div>
+      </div>
+      {% else %}
       <!-- Button trigger loginModal -->
       <button type="button" class="btn btn-outline-success mx-1" data-toggle="modal" data-target="#loginModal">
         Login
       </button>
-
       <!-- Button trigger signupModal -->
       <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#signupModal">
         Sign Up
       </button>
 
+      {% endif %}
     </div>
   </nav>
 
@@ -114,38 +126,41 @@
 
             <div class="form-group">
               <label for="username">Username</label>
-              <input type="text" class="form-control" id="username" placeholder="choose a unique username">
+              <input type="text" class="form-control" id="username" name='username'
+                placeholder="choose a unique username">
             </div>
 
             <div class="form-group">
               <label for="fname">Firstname</label>
-              <input type="text" class="form-control" id="fname" placeholder="First Name">
+              <input type="text" class="form-control" id="fname" name='fname' placeholder="First Name">
             </div>
 
             <div class="form-group">
               <label for="lname">Lastname</label>
-              <input type="text" class="form-control" id="lname" placeholder="Last Name">
+              <input type="text" class="form-control" id="lname" name='lname' placeholder="Last Name">
             </div>
 
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="email@example.com">
+              <input type="email" class="form-control" id="email" name='email' placeholder="email@example.com">
             </div>
 
             <div class="form-group">
               <label for="pass1">Choose Password</label>
-              <input type="password" class="form-control" id="pass1">
+              <input type="password" class="form-control" name='pass1' id="pass1">
             </div>
 
             <div class="form-group">
               <label for="pass2">Confirm password</label>
-              <input type="password" class="form-control" id="pass2">
+              <input type="password" class="form-control" name='pass2' id="pass2">
             </div>
             {% csrf_token %}
             <button type="submit" class="btn btn-primary">Submit</button>
 
           </form>
           <!--forms ending-->
+          <div class="modal-footer">
+          </div>
         </div>
         <!-- SignUp modal body ending-->
       </div>
@@ -165,17 +180,19 @@
         <div class="modal-body">
 
           <!--forms for loginModal body-->
-          <form>
+          <form action='login/' method='post'>
+            {% csrf_token %}
             <div class="form-group">
               <label for="loginusername" class="font-weight-bold">Username</label>
-              <input type="text" class="form-control" id="loginusername" placeholder="Enter your Username">
+              <input type="text" class="form-control" id="loginusername" placeholder="Enter your Username"
+                name="loginusername">
             </div>
 
             <div class="form-group">
               <label for="loginpass" class="font-weight-bold">Enter Password</label>
-              <input type="password" class="form-control" id="loginpass">
+              <input type="password" class="form-control" id="loginpass" name="loginpass">
             </div>
-            {% csrf_token %}
+
             <button type="submit" class="btn btn-primary">Submit</button>
 
           </form>
