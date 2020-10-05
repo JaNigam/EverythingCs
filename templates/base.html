@@ -47,7 +47,7 @@
           {% endblock homeactive %}">
           <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
-        {% comment %} blogsButon {% endcomment %}
+        {% comment %} blogsButton {% endcomment %}
         <li class="nav-item {% block blogactive %}
           {% endblock blogactive %}">
           <a class="nav-link" href="/blog">Blogs</a>
@@ -60,6 +60,13 @@
           <a class="nav-link" href="/contact">Contact Us</a>
         </li>
 
+        <!--the askdoubt button will only be available one the user is logged in-->
+        {% if user.is_authenticated %}
+        <li class="nav-item {% block doubtactive %}
+           {% endblock doubtactive %}">
+          <a class="nav-link" href="/doubts">Ask a Doubt</a>
+        </li>
+        {% endif %}
       </ul>
 
       <form class="form-inline my-2 my-lg-0">

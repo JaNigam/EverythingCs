@@ -4,21 +4,21 @@ from django.shortcuts import render, HttpResponse, redirect
 from home.models import Contact
 # for using message for alerting
 from django.contrib import messages
-#important we are using "auth.models" since a model "User"
-#is already created in django admin which will handle user
-#signup and we explicitly dont have to make a model for user
+# important we are using "auth.models" since a model "User"
+# is already created in django admin which will handle user
+# signup and we explicitly dont have to make a model for user
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from blog.models import Post
 
 # Create your views here.
 
 
 def home(request):
-    return render(request, "home/home.html")
+    top_posts = Post.objects.all().order_by('-timeStamp')[:3]
+    context = {'top_posts': top_posts}
 
-
-def about(request):
-    return HttpResponse('this is about')
+    return render(request, "home/home.html", context)
 
 
 def contact(request):
@@ -45,7 +45,7 @@ def contact(request):
 
 def handleSignup(request):
     if request.method == 'POST':
-        
+
         username = request.POST['username']
         fname = request.POST['fname']
         lname = request.POST['lname']
@@ -53,30 +53,32 @@ def handleSignup(request):
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
 
-    #checking user inputs valid credentials
-        if len(username)>10:
+    # checking user inputs valid credentials
+        if len(username) > 10:
             messages.error
-        
+
     # creating users
         myuser = User.objects.create_user(username, email, pass1)
         myuser.first_name = fname
         myuser.last_name = lname
         myuser.save()
-        messages.success(request, 'your account have been successfully created!')
-        
+        messages.success(
+            request, 'your account have been successfully created!')
+
         return redirect("home")
 
     else:
         return HttpResponse("error 404 not found")
 
-#handling login and logout
+# handling login and logout
+
 
 def handleLogin(request):
-    if request.method =='POST':
+    if request.method == 'POST':
         loginusername = request.POST['loginusername']
         loginpassword = request.POST['loginpass']
 
-        user = authenticate(username = loginusername, password = loginpassword)
+        user = authenticate(username=loginusername, password=loginpassword)
         # the above line will retun none if the user is not found
         # therfore:
 
@@ -88,9 +90,12 @@ def handleLogin(request):
             messages.error(request, "Sorry invalid credentials, try again!")
             return redirect('home')
 
+
 def handleLogout(request):
     logout(request)
     messages.warning(request, "session logged out!")
     return redirect("/")
-    
 
+
+def doubts(request):
+    return render(request, "questions/doubts.html")
