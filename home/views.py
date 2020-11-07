@@ -1,3 +1,5 @@
+from django.db import reset_queries
+from django.db.models import query
 from django.shortcuts import render, HttpResponse, redirect
 # now we'll be importing home models to store the
 # data in the contact model
@@ -10,15 +12,24 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from blog.models import Post
+from quesAns.models import Question
 
 # Create your views here.
 
 
 def home(request):
     top_posts = Post.objects.all().order_by('-timeStamp')[:3]
-    context = {'top_posts': top_posts}
+    ques = Question.objects.all().order_by('-time_stamp')[:3]
+    context = {'top_posts': top_posts, 'ques': ques}
 
     return render(request, "home/home.html", context)
+
+
+def search(request):
+    query = request.GET['query']
+    allposts = Post.objects.filter(title__icontains=query)
+    params = {'allposts': allposts}
+    return render(request, "home/search.html", params)
 
 
 def contact(request):
@@ -99,3 +110,17 @@ def handleLogout(request):
 
 def doubts(request):
     return render(request, "questions/doubts.html")
+
+
+def loginpage(request):
+    return render(request, "home/login.html")
+
+
+def signuppage(request):
+    return render(request, "home/signup.html")
+
+
+def addpost(CreateView):
+    model = Post
+    template = 'add_post.html'
+    fields = '__all__'

@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block home %}
+<link rel="stylesheet" href="{% static 'blogPost.css' %}">
+{% endblock home %}
 {% block title %}
 {{ post.title}}
 {% endblock title %}
@@ -9,11 +13,12 @@
   <div class="jumbotron my-4 ">
     <div class="blog-post">
       <h2 class="blog-post-title">{{post.title}}</h2>
+      <img src="{{post.thumbnail.url}}" alt="">
       <p class="blog-post-meta">{{post.timeStamp}} by <a href="#">{{post.author}}</a></p>
       <div class="post-content border-top border-secondary p-3 text-justify">
-         <p>{{post.content}}</p>
+        <p>{{post.content|safe}}</p>
       </div>
-     
+
     </div>
   </div>
 </div>
@@ -21,53 +26,53 @@
 
 <div>
   <div class="container">
-  
-  {% if user.is_authenticated %}
 
-  <form action="/blog/postComment" method='post'>
+    {% if user.is_authenticated %}
+
+    <form action="/blog/postComment" method='post'>
       <form>
-      <h2 class = 'my-2'>Comments({{comments.count}})</h2>
+        <h2 class='my-2'>Comments({{comments.count}})</h2>
         <div class="form-group">
           {% csrf_token %}
           <label for="exampleInputEmail1">post comment </label>
-          <input type="text" class="form-control" name='comment' placeholder='type here'>
+          <input type="text" class="form-control" name='comment' placeholder='type here' id='comment-text'>
           <input type="hidden" name="postSno" value="{{post.sno}}">
         </div>
         <button type="submit" class="btn btn-primary">comment</button>
       </form>
 
-       {% for comment in comments %}
-        
+      {% for comment in comments %}
+
       <div class="row my-3">
-        <div class="col-md-1">image here</div>
+        <div class="col-md-1"><img src="/static/images/avatar.png" alt="" height="60px"> </div>
         <div class="col-md-11 bg-light">
-        <b>-by {{comment.user.username}}</b> at {{comment.timestamp}}
-        <div>
-        {{comment.comment}}
-        </div>
+          <b>-by {{comment.user.username}}</b> at {{comment.timestamp}}
+          <div>
+            {{comment.comment}}
+          </div>
         </div>
       </div>
       {% endfor %}
 
-  {% else %}
-  
-  <h2 class = 'my-2'>Comments ({{comments.count}})</h2>
-  <i>Log in to comment</i>
-  {% for comment in comments %}
-        
+      {% else %}
+
+      <h2 class='my-2' style="color:white!important;">Comments ({{comments.count}})</h2>
+      <a href="/loginpage"><i style="color: white;">Log in to comment</i></a>
+      {% for comment in comments %}
+
       <div class="row my-3">
-        <div class="col-md-1">image here</div>
+        <div class="col-md-1"><img src="/static/images/avatar.png" alt="" height="60px"></div>
         <div class="col-md-11 bg-light">
-        <b>-by {{comment.user.username}}</b> at {{comment.timestamp}}
-        <div>
-        {{comment.comment}}
-        </div>
+          <b>-by {{comment.user.username}}</b> at {{comment.timestamp}}
+          <div id='comment'>
+            {{comment.comment}}
+          </div>
         </div>
       </div>
       {% endfor %}
 
-  {% endif %}
-  
+      {% endif %}
+
   </div>
 </div>
 

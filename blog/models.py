@@ -1,15 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 
 class Post(models.Model):
     sno = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
-    content = models.TextField()
+    content = RichTextField(blank=True, null=True)
     author = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=200)
+    slug = models.CharField(max_length=200)
     timeStamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:

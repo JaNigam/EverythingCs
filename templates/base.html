@@ -3,6 +3,8 @@
 <html lang="en">
 
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static '/base.css' %}">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
@@ -33,8 +35,10 @@
 </head>
 
 <body>
+  {% comment %} <img class="wave" src="{% static '/images/wave.png' %}"> {% endcomment %}
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand border rounded pl-2 pr-2 bg-success" href="/">EverythingCs</a>
+    <a href="/"><img src="{% static '/images/logo.png' %}" width="50px" height="50px"
+        style="border-radius: 50px; margin-right: 10px;"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -52,6 +56,8 @@
           {% endblock blogactive %}">
           <a class="nav-link" href="/blog">Blogs</a>
         </li>
+
+
         {% comment %} contactUs button {% endcomment %}
         {% comment %} this contact-active will be called once that particular page
         is opened and then that button will become white {% endcomment %}
@@ -61,16 +67,17 @@
         </li>
 
         <!--the askdoubt button will only be available one the user is logged in-->
-        {% if user.is_authenticated %}
+      
         <li class="nav-item {% block doubtactive %}
            {% endblock doubtactive %}">
-          <a class="nav-link" href="/doubts">Ask a Doubt</a>
+          <a class="nav-link" href="{% url 'all-questions' %}">Forum</a>
         </li>
-        {% endif %}
+      
       </ul>
 
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+      <form method = 'get' action = '/search'class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" style="border-radius: 50px;" type="search" placeholder="Search"
+          aria-label="Search" name = 'query' id = 'search'/>
 
 
         <button class="btn btn-outline-success my-2 my-sm-0 mr-3" type="submit">
@@ -78,26 +85,23 @@
         </button>
       </form>
 
+
+
       {% if user.is_authenticated %}
       <!-- Example single danger button -->
       <div class="btn-group">
         <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">
+          aria-expanded="false" id = 'user-button'>
           {{request.user}}
         </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="/logout">logout</a>
+        <div class="dropdown-menu" id = "dropdown-box">
+          <a class="dropdown-item" href="/logout" id = 'logout-link'>logout</a>
+          <a class="dropdown-item" href="/blog/addblog" id = 'addblog-link'>add blog</a>
         </div>
       </div>
       {% else %}
-      <!-- Button trigger loginModal -->
-      <button type="button" class="btn btn-outline-success mx-1" data-toggle="modal" data-target="#loginModal">
-        Login
-      </button>
-      <!-- Button trigger signupModal -->
-      <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#signupModal">
-        Sign Up
-      </button>
+
+      <a class="btn btn-outline-success my-2 my-sm-0 mr-3" href="/loginpage" role="button">SignIn</a>
 
       {% endif %}
     </div>
@@ -111,106 +115,6 @@
     </button>
   </div>
   {% endfor %}
-
-
-
-
-
-  <!-- SignUp Modal -->
-  <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="signupModaltitle">SignUp</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-          <!--forms for signupModal body-->
-          <form action="/signup/" method="post">
-
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" class="form-control" id="username" name='username'
-                placeholder="choose a unique username">
-            </div>
-
-            <div class="form-group">
-              <label for="fname">Firstname</label>
-              <input type="text" class="form-control" id="fname" name='fname' placeholder="First Name">
-            </div>
-
-            <div class="form-group">
-              <label for="lname">Lastname</label>
-              <input type="text" class="form-control" id="lname" name='lname' placeholder="Last Name">
-            </div>
-
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" name='email' placeholder="email@example.com">
-            </div>
-
-            <div class="form-group">
-              <label for="pass1">Choose Password</label>
-              <input type="password" class="form-control" name='pass1' id="pass1">
-            </div>
-
-            <div class="form-group">
-              <label for="pass2">Confirm password</label>
-              <input type="password" class="form-control" name='pass2' id="pass2">
-            </div>
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Submit</button>
-
-          </form>
-          <!--forms ending-->
-          <div class="modal-footer">
-          </div>
-        </div>
-        <!-- SignUp modal body ending-->
-      </div>
-    </div>
-  </div>
-
-  <!--login modal-->
-  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="loginModaltitle">Login</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-          <!--forms for loginModal body-->
-          <form action='login/' method='post'>
-            {% csrf_token %}
-            <div class="form-group">
-              <label for="loginusername" class="font-weight-bold">Username</label>
-              <input type="text" class="form-control" id="loginusername" placeholder="Enter your Username"
-                name="loginusername">
-            </div>
-
-            <div class="form-group">
-              <label for="loginpass" class="font-weight-bold">Enter Password</label>
-              <input type="password" class="form-control" id="loginpass" name="loginpass">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-
-          </form>
-          <!--forms ending-->
-        </div>
-        <!-- login modal body ending-->
-      </div>
-    </div>
-  </div>
-  <!--login modal ending-->
-
 
   {% block body %} {% endblock body %}
 </body>

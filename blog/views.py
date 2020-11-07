@@ -1,5 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
-from blog.models import Post, BlogComment
+from django.db.models import fields
+from django.contrib.auth.models import User
+from blog.models import Post, BlogComment, models
+from django.views.generic import CreateView
 from django.contrib import messages
 
 
@@ -48,3 +51,21 @@ def postComment(request):
         messages.success(request, 'your comment has been added')
 
         return redirect(f"/blog/{post.slug}")
+
+
+def addblog(request):
+
+    if request.method == 'POST':
+        # image = request.FILES.get('imagefile')
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        author = request.user
+        slug_words = title.split()
+        Slug = slug_words[0]
+        for word in slug_words[1:]:
+            Slug = Slug + "-" + word
+        slug = Slug
+        blog = Post(title=title,
+                    content=content, author=author, slug=slug)
+        blog.save()
+    return render(request, 'blog/add_post.html')
