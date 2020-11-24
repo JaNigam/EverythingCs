@@ -28,7 +28,8 @@ def home(request):
 def search(request):
     query = request.GET['query']
     allposts = Post.objects.filter(title__icontains=query)
-    params = {'allposts': allposts}
+    all_questions = Question.objects.filter(title__icontains=query)
+    params = {'allposts': allposts, 'allquest': all_questions}
     return render(request, "home/search.html", params)
 
 
