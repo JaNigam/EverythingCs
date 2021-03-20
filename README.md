@@ -17,7 +17,7 @@
 ### note:
 if you are getting an error which says ckeditor not installed then:-
 
-`-` type `pip install pillow` if not already instlled locally
+`-` type `pip install pillow` if not already installed locally
 
 `-` type `pip install django-ckeditor`
 
