@@ -14,6 +14,13 @@
 
 `6` ctrl + left-click on that link and you'll reach the site
 
+### note:
+if you are getting an error which says ckeditor not installed then:-
+
+`-` type `pip install pillow` if not already instlled locally
+
+`-` type `pip install django-ckeditor`
+
 
 # screenshots and gif of the project
 
