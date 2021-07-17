@@ -31,15 +31,42 @@
 
     <form action="/blog/postComment" method='post'>
       <form>
-        <h2 class='my-2'>Comments({{comments.count}})</h2>
+        <h2 class='my-2' id="commentscount" style="color: white;
+    padding:1rem;
+    background-color:rgb(35, 139, 250);
+    border-radius: 2rem;
+    font-size: 1.5rem;">Comments({{comments.count}})</h2>
         <div class="form-group">
           {% csrf_token %}
-          <label for="exampleInputEmail1">post comment </label>
-          <input type="text" class="form-control" name='comment' placeholder='type here' id='comment-text'>
+          <label for="exampleInputEmail1" style="color: white;">post your comment </label>
+
+          <!-- comment text box here -->
+          <input type="text" class="form-control" name='comment' placeholder='comment here' id='commentbox'
+            onkeyup="enabledisable(this)">
           <input type="hidden" name="postSno" value="{{post.sno}}">
         </div>
-        <button type="submit" class="btn btn-primary">comment</button>
+        <!-- comment button here -->
+
+        <button type="submit" class="btn btn-primary" disabled='disabled' id="commentbtn">comment</button>
       </form>
+
+      <script type="text/javascript">
+
+        function enabledisable(commentbox) {
+          var cmtbtn = document.getElementById('commentbtn');
+          if (commentbox.value.trim() != "") {
+            cmtbtn.disabled = false;
+          }
+
+          else {
+
+            cmtbtn.disabled = true;
+          }
+        };
+
+
+
+      </script>
 
       {% for comment in comments %}
 
@@ -75,5 +102,8 @@
 
   </div>
 </div>
+
+
+
 
 {% endblock body %}

@@ -26,7 +26,9 @@
 
 
 <div class="container">
-  <h2 class='my-2'>answers({{answers.count}})</h2>
+  <h2 class='my-3' id="answercount">Total answers({{answers.count}})</h2>
+
+
   <br>
   {% for answer in answers %}
   <div class="card my-3">
@@ -57,17 +59,34 @@
     <form>
       <div class="form-group my-3">
         {% csrf_token %}
-        <label for="exampleInputEmail1" style="color:white">Share Your Answer </label>
+        <label for="exampleInputEmail1" style="color:white">Post Your Answer </label>
 
-        <textarea name="answer"></textarea>
+        <textarea name="answer" id='answer'></textarea>
+
         <script type='text/javascript'>
-          CKEDITOR.replace("answer")
+          //enabling submit button only when some text is typed
+          CKEDITOR.replace('answer', {
+            on: {
+              change: function () {
+                var inst = CKEDITOR.instances['answer'];
+                if (inst.getData() != '') {
+                  $('#submitAnswer').removeAttr('disabled');
+                }
+
+                else {
+                  $('#submitAnswer').attr('disabled', 'disabled');
+                }
+              }
+            }
+          });
         </script>
 
 
         <input type="hidden" name="question" value="{{question.title}}">
       </div>
-      <button type="submit" class="btn btn-primary">submit</button>
+
+      <!-- addding disabled attribute since on refresh, by defualt the submit button should be disabled -->
+      <button type="submit" class="btn btn-primary" id='submitAnswer' disabled='disabled'>submit</button>
     </form>
 </div>
 {% endif %}

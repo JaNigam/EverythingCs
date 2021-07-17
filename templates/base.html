@@ -67,17 +67,17 @@
         </li>
 
         <!--the askdoubt button will only be available one the user is logged in-->
-      
+
         <li class="nav-item {% block doubtactive %}
            {% endblock doubtactive %}">
           <a class="nav-link" href="{% url 'all-questions' %}">Forum</a>
         </li>
-      
+
       </ul>
 
-      <form method = 'get' action = '/search'class="form-inline my-2 my-lg-0">
+      <form method='get' action='/search' class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" style="border-radius: 50px;" type="search" placeholder="Search"
-          aria-label="Search" name = 'query' id = 'search'/>
+          aria-label="Search" name='query' id='search' />
 
 
         <button class="btn btn-outline-success my-2 my-sm-0 mr-3" type="submit">
@@ -91,12 +91,12 @@
       <!-- Example single danger button -->
       <div class="btn-group">
         <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false" id = 'user-button'>
+          aria-expanded="false" id='user-button'>
           {{request.user}}
         </button>
-        <div class="dropdown-menu" id = "dropdown-box">
-          <a class="dropdown-item" href="/logout" id = 'logout-link'>logout</a>
-          <a class="dropdown-item" href="/blog/addblog" id = 'addblog-link'>add blog</a>
+        <div class="dropdown-menu" id="dropdown-box">
+          <a class="dropdown-item" href="/logout" id='logout-link'>logout</a>
+          <a class="dropdown-item" href="/blog/addblog" id='addblog-link'>add blog</a>
         </div>
       </div>
       {% else %}

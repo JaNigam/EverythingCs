@@ -1,3 +1,9 @@
+.body
+{
+    background: url("/static/images/vector-purple.jpg");
+    /* background-size: cover; */
+}
+
 #abc
 {
     background: rgba(0, 0, 0, .3);

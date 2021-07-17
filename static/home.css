@@ -1,6 +1,7 @@
 .body
 {
     background: url("/static/images/vector-purple.jpg");
+    background-size: auto;
 }
 
 .custom_class
@@ -54,4 +55,12 @@
     background: rgba(0, 0, 0, 0.4);
     padding-bottom: 20px;
 
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
 }
