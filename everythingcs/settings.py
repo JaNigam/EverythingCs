@@ -145,5 +145,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Activate Django-Heroku.
 django_heroku.settings(locals())
 
+#this line should be included before deploying to heroku (debug = False)
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
