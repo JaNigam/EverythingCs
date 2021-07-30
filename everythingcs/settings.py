@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'h@5^40jb$!qyd2&2)!$)j&%8c4!dnt^z&x-51mbu7$_7v+*y^$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['https://everythingcs.herokuapp.com', 'localhost', '127.0.0.1' ]
 
