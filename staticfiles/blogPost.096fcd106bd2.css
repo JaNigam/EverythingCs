@@ -1,0 +1,35 @@
+.body
+{
+    background: url("/static/images/vector-purple.bad61491fb67.jpg");
+    /* background-size: auto;
+    background-repeat: no-repeat; */
+}
+#comment
+{
+    background:green;
+    border-radius: 20px;
+}
+
+#comment-section
+{
+    background: #000;
+}
+
+#comment-text
+{
+    border-radius: 20px;
+}
+
+.jumbotron
+{
+    background: rgba(0,0,0,.3) !important;
+}
+
+#commentscount
+{
+    color: white;
+    padding:1rem;
+    background-color:rgb(35, 139, 250);
+    border-radius: 2rem;
+    font-size: 1.5rem;
+}
