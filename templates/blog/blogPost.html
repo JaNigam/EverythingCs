@@ -52,19 +52,16 @@
 
       <script type="text/javascript">
 
-        function enabledisable(commentbox) {
-          var cmtbtn = document.getElementById('commentbtn');
-          if (commentbox.value.trim() != "") {
-            cmtbtn.disabled = false;
-          }
+       function enabledisable(commentbox) {
+            var commentButton = document.getElementById('commentbtn');
+            if (commentbox.value.trim() != "") {
+              commentButton.disabled = false;
+            }
+            else {
 
-          else {
-
-            cmtbtn.disabled = true;
-          }
-        };
-
-
+              commentButton.disabled = true;
+            }
+          };
 
       </script>
 
